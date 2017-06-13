@@ -4,11 +4,11 @@ provider "aws" {
   profile                 = "webops"
 }
 
-resource "aws_instance" "example" {
+resource "aws_instance" "snbx-oneserver" {
   ami           = "ami-01ccc867"
   instance_type = "t2.micro"
 
   tags {
-    Name = "sandbox-onewebserver"
+    Name = "snbx-oneserver"
   }
 }
