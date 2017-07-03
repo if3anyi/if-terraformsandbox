@@ -1,6 +1,6 @@
 resource "aws_launch_configuration" "example" {
-  image_id        = "ami-a8d2d7ce"
-  instance_type   = "t2.micro"
+  image_id        = "ami-d7b9a2b1"
+  instance_type   = "${var.instance_type}"
   security_groups = ["${aws_security_group.sg.id}"]
 
   user_data = <<-EOF
@@ -21,18 +21,18 @@ resource "aws_autoscaling_group" "example" {
   load_balancers    = ["${aws_elb.example.name}"]
   health_check_type = "ELB"
 
-  min_size = 2
-  max_size = 10
+  min_size = "${var.min_size}"
+  max_size = "${var.max_size}"
 
   tag {
     key                 = "Name"
-    value               = "terraform-filelayout-example"
+    value               = "${var.cluster_name}-example"
     propagate_at_launch = true
   }
 }
 
 resource "aws_security_group" "sg" {
-  name = "terraform-example-instance"
+  name = "${var.cluster_name}-instance"
 
   ingress {
     from_port   = "${var.server_port}"
@@ -49,7 +49,7 @@ resource "aws_security_group" "sg" {
 data "aws_availability_zones" "all" {}
 
 resource "aws_elb" "example" {
-  name               = "terraform-asg-example"
+  name               = "${var.cluster_name}-example"
   availability_zones = ["${data.aws_availability_zones.all.names}"]
   security_groups    = ["${aws_security_group.elb-sg.id}"]
 
@@ -70,7 +70,7 @@ resource "aws_elb" "example" {
 }
 
 resource "aws_security_group" "elb-sg" {
-  name = "terraform-example-elb"
+  name = "${var.cluster_name}-elb"
 
   ingress {
     from_port   = 80
@@ -85,4 +85,9 @@ resource "aws_security_group" "elb-sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+#s3 bucket
+resource "aws_s3_bucket" "bucket" {
+  bucket = "${var.bucket_name}"
 }
