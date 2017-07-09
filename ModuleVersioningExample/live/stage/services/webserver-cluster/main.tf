@@ -5,7 +5,7 @@ provider "aws" {
 }
 
 module "webserver_cluster" {
-  source = "../../../ModuleVersioningExample/modules/services/webserver-cluster"
+  source = "../../../../ModuleVersioningExample/modules/services/webserver-cluster"
 
   cluster_name = "webservers-stage"
   bucket_name = "ModuleVersion-example-a"
