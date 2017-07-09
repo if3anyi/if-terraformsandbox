@@ -12,9 +12,9 @@ resource "aws_s3_bucket" "terraform_state" {
     enabled = true
   }
 
-  #lifecycle {
-  #  prevent_destroy = true
-  #}
+  lifecycle {
+   prevent_destroy = false
+  }
 }
 
 # terraform {
