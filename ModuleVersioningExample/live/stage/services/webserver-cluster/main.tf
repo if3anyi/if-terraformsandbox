@@ -5,7 +5,10 @@ provider "aws" {
 }
 
 module "webserver_cluster" {
-  source = "../../../../ModuleVersioningExample/modules/services/webserver-cluster"
+  #source = "../../../../ModuleVersioningExample/modules/services/webserver-cluster"
+  #source = "git::git@github.com:foo/modules.git//webserver-cluster?ref=v0.0.1"
+  #source = "git::git@github.com:if3anyi/if-terraformsandbox-modules.git//services/webserver-cluster?ref=v0.0.1"
+  source = "git::git@github.com:if3anyi/if-terraformsandbox-modules.git//services/webserver-cluster?ref=v0.0.2"
 
   cluster_name = "webservers-stage"
   bucket_name = "ModuleVersion-example-a"
